@@ -1,33 +1,42 @@
-import { useState } from 'react';
 import { Dna, ExternalLink, Users } from 'lucide-react';
 import {
   DNA_ENGRAVING_PATH,
   DNA_LINEAGES,
   FAMILY_MEMBERS,
   FamilyMember,
+  normalizeText,
 } from '../data/familyArchive';
 import { ResilientImage } from './ResilientImage';
 
 interface GenealogySectionProps {
   onOpenAuthModal: (tab: 'login' | 'register') => void;
   searchQuery: string;
+  selectedMemberId: 'rachid' | 'mostefa' | 'fatma';
+  onSelectMemberId: (id: 'rachid' | 'mostefa' | 'fatma') => void;
+  activeLineageTab: 'compare' | 'maternel' | 'paternel';
+  onSelectLineageTab: (tab: 'compare' | 'maternel' | 'paternel') => void;
 }
 
-export function GenealogySection({ onOpenAuthModal, searchQuery }: GenealogySectionProps) {
-  const [selectedMember, setSelectedMember] = useState<FamilyMember>(FAMILY_MEMBERS[2]);
-  const [activeLineageTab, setActiveLineageTab] = useState<'compare' | 'maternel' | 'paternel'>(
-    'compare'
-  );
+export function GenealogySection({
+  onOpenAuthModal,
+  searchQuery,
+  selectedMemberId,
+  onSelectMemberId,
+  activeLineageTab,
+  onSelectLineageTab,
+}: GenealogySectionProps) {
+  const selectedMember: FamilyMember =
+    FAMILY_MEMBERS.find((m) => m.id === selectedMemberId) || FAMILY_MEMBERS[2];
 
-  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const normalizedQuery = normalizeText(searchQuery);
 
   const matchesMember = (member: FamilyMember) => {
     if (!normalizedQuery) return true;
     return (
-      member.firstName.toLowerCase().includes(normalizedQuery) ||
-      member.lastName.toLowerCase().includes(normalizedQuery) ||
-      member.birthPlace.toLowerCase().includes(normalizedQuery) ||
-      member.haplogroupRef.toLowerCase().includes(normalizedQuery)
+      normalizeText(member.firstName).includes(normalizedQuery) ||
+      normalizeText(member.lastName).includes(normalizedQuery) ||
+      normalizeText(member.birthPlace).includes(normalizedQuery) ||
+      normalizeText(member.haplogroupRef).includes(normalizedQuery)
     );
   };
 
@@ -64,7 +73,7 @@ export function GenealogySection({ onOpenAuthModal, searchQuery }: GenealogySect
                     <button
                       key={member.id}
                       type="button"
-                      onClick={() => setSelectedMember(member)}
+                      onClick={() => onSelectMemberId(member.id)}
                       className={`text-left p-4 rounded-md border transition-colors cursor-pointer flex items-center gap-4 ${
                         active
                           ? 'bg-[#1C1611] text-[#FAF0D7] border-[#1C1611]'
@@ -122,7 +131,7 @@ export function GenealogySection({ onOpenAuthModal, searchQuery }: GenealogySect
                   <div className="max-w-md mx-auto">
                     <button
                       type="button"
-                      onClick={() => setSelectedMember(son)}
+                      onClick={() => onSelectMemberId(son.id)}
                       className={`w-full text-left p-4 rounded-md border transition-colors cursor-pointer flex items-center gap-4 ${
                         active
                           ? 'bg-[#1C1611] text-[#FAF0D7] border-[#1C1611]'
@@ -263,7 +272,7 @@ export function GenealogySection({ onOpenAuthModal, searchQuery }: GenealogySect
                   role="tab"
                   aria-selected={activeLineageTab === tab.id}
                   type="button"
-                  onClick={() => setActiveLineageTab(tab.id)}
+                  onClick={() => onSelectLineageTab(tab.id)}
                   className={`px-3.5 py-2 text-xs font-medium rounded-sm transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
                     activeLineageTab === tab.id
                       ? 'bg-[#1C1611] text-[#FAF0D7]'

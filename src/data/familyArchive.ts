@@ -47,9 +47,41 @@ export interface DnaLineage {
   accentTone: 'lapis' | 'terracotta';
 }
 
+export interface HistoricalEvent {
+  id: string;
+  orderLabel: string;
+  yearLabel: string;
+  era: 'origines' | 'recensements' | 'xxe';
+  title: string;
+  location: string;
+  summary: string;
+  details: string;
+  familiesInvolved: string[];
+  archivalRef: string;
+}
+
+export interface ElMiliaPhoto {
+  id: string;
+  title: string;
+  caption: string;
+  src: string;
+  photographer: string;
+  license: string;
+  sourceUrl: string;
+  category: 'ville' | 'paysage';
+}
+
 export const HERO_IMAGE_PATH = '/src/assets/images/hero_el_milia_archives_1794907604737.jpg';
-export const LANDSCAPE_IMAGE_PATH = '/src/assets/images/ouled_ali_landscape_1794907605231.jpg';
+export const LANDSCAPE_IMAGE_PATH = '/images/el-milia/vue-sur-el-milia.jpg';
 export const DNA_ENGRAVING_PATH = '/src/assets/images/dna_lineage_engraving_1794907605714.jpg';
+
+export function normalizeText(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
 
 export const FAMILY_CLANS: FamilyClan[] = [
   {
@@ -280,6 +312,170 @@ export const DNA_LINEAGES: Record<'maternel' | 'paternel', DnaLineage> = {
       "Le chromosome Y est transmis de père en fils. Il retrace directement la lignée patronymique masculine de la famille Laïeb.",
   },
 };
+
+export const EL_MILIA_TIMELINE: HistoricalEvent[] = [
+  {
+    id: 'odjak-ajankia',
+    orderLabel: '01',
+    yearLabel: 'Époque ottomane',
+    era: 'origines',
+    title: "Garnison de l'Odjak et naissance de l'Ajankia",
+    location: "L'Ajankia (Ajnak) · Ouled-Kassem",
+    summary:
+      "Formation de l'un des plus anciens quartiers arabes d'El Milia autour du terme turc « Odjak ».",
+    details:
+      "Avant l'appellation du village d'El Milia, les habitants de l'Ajankia appartenaient aux Ouled-Kassem, formant avec les Ouled-Debbeb la grande tribu des Ouled-Aïdoune. La présence d'une garnison d'infanterie ottomane (« Odjak ») donna son nom au lieu : l'Odjak devint l'Ajonkia, puis Ajankia et Ajnak.",
+    familiesInvolved: ['Ouled-Kassem', 'Ouled-Debbeb', 'Ouled-Aïdoune'],
+    archivalRef: 'TOPONYMIE · ODJAK / AJANKIA',
+  },
+  {
+    id: 'trois-freres-1800',
+    orderLabel: '02',
+    yearLabel: 'Vers 1800',
+    era: 'origines',
+    title: 'La fratrie originelle : Laïeb, Megriche et Lebsir',
+    location: 'El Milia · Mémoire des ancêtres',
+    summary:
+      'Trois frères issus du même père et de la même mère identifiés par leurs surnoms physiques.',
+    details:
+      "Selon les récits transmis par nos grands-pères et arrière-grands-pères, les familles Laïeb, Megriche et Lebsir partagent une ascendance directe commune. Au tournant des années 1800, chacun des trois frères portait un surnom lié à une particularité physique : Laïeb (celui qui boitait), Megriche (celui qui était maigre) et Lebsir (celui qui était borgne).",
+    familiesInvolved: ['Laïeb', 'Megriche', 'Lebsir'],
+    archivalRef: 'TRADITION ORALE · FRATRIE ~1800',
+  },
+  {
+    id: 'recensements-1830',
+    orderLabel: '03',
+    yearLabel: '1830 – 1962',
+    era: 'recensements',
+    title: 'Les 19 recensements et la séparation des patronymes',
+    location: 'Ex-département de Constantine',
+    summary:
+      "Dix-neuf recensements coloniaux figent administrativement les surnoms en trois noms de famille.",
+    details:
+      "Durant l'occupation française entre 1830 et 1962, l'administration coloniale conduisit dix-neuf recensements de population en Algérie. En raison de nombreuses erreurs administratives — parfois volontaires — les surnoms des trois frères furent enregistrés comme trois patronymes distincts, tout en rebaptisant officiellement le village d'El Milia.",
+    familiesInvolved: ['Laïeb', 'Megriche', 'Lebsir'],
+    archivalRef: 'ÉTAT CIVIL · 19 RECENSEMENTS',
+  },
+  {
+    id: 'premiers-commerces',
+    orderLabel: '04',
+    yearLabel: 'XIXe – début XXe s.',
+    era: 'recensements',
+    title: 'Essor de la dechra et premiers commerces du village',
+    location: 'Ouled-Ali-Oubraham & El Milia',
+    summary:
+      "Les clans d'Ouled-Ali-Oubraham et de l'Ajankia fondent le cœur commerçant d'El Milia.",
+    details:
+      "Au sein de la dechra d'Ouled-Ali-Oubraham s'organisent les grandes familles (Boucherit au centre, Allalouche, Bakiri/Saadna, Lefouili, Boutellis, Boukhchem, Boufafa). Parallèlement, les plus anciennes familles de l'Ajankia — Krid (Grid), Kehal, Laïb, Lebsir, Meghriche et Mokhbi — établissent les premiers commerces du village d'El Milia.",
+    familiesInvolved: ['Boucherit', 'Krid (Grid)', 'Kehal', 'Laïb', 'Mokhbi'],
+    archivalRef: 'CHRONIQUE LOCALE · EL MILIA',
+  },
+  {
+    id: 'naissances-parents',
+    orderLabel: '05',
+    yearLabel: '1921 & 1931',
+    era: 'xxe',
+    title: 'Naissances de Mostefa Laïeb et Fatma Grid à El Milia',
+    location: 'El Milia, Algérie',
+    summary:
+      'Alliance de la lignée paternelle Laïeb (G-M201) et de la lignée maternelle Grid (H).',
+    details:
+      "Le 6 février 1921 naît Mostefa (Moustafa) Laïeb à El Milia, suivi le 6 février 1931 par la naissance de Fatma Grid dans la même cité. Leur union relie deux des lignées fondatrices de l'Ajankia et servira plus tard de socle aux analyses ADN familiales iGENEA.",
+    familiesInvolved: ['Laïeb', 'Grid (Krid)'],
+    archivalRef: 'FILIATION · GÉNÉRATION II',
+  },
+  {
+    id: 'chronique-1961',
+    orderLabel: '06',
+    yearLabel: '5 janvier 1961',
+    era: 'xxe',
+    title: "Chronique d'Ouled-Ali-Oubraham en guerre de libération",
+    location: 'Ouled-Ali-Oubraham · El Milia',
+    summary:
+      'Photographie historique des familles de la dechra et de l’Ajankia en pleine guerre d’Algérie.',
+    details:
+      "Le 5 janvier 1961, pendant la guerre de libération de l'Algérie, Ouled-Ali-Oubraham — juste à côté de l'Ajankia (Ouled-Kacem) dans la commune mixte d'El Milia — demeure structurée autour de ses lignées historiques et de la solidarité entre voisins, des Ben-Braham de Hajaje aux familles de l'autre rive.",
+    familiesInvolved: ['Boucherit', 'Allalouche', 'Boutellis', 'Boufafa', 'Laïb'],
+    archivalRef: 'ARCHIVE · 5 JANVIER 1961',
+  },
+  {
+    id: 'transmission-1963',
+    orderLabel: '07',
+    yearLabel: '1963 – Aujourd’hui',
+    era: 'xxe',
+    title: 'De Mulhouse à Paris : préservation des archives Laïeb',
+    location: 'Mulhouse & Paris, France',
+    summary:
+      "Naissance de Rachid Laïeb en 1963 et numérisation de la mémoire d'El Milia.",
+    details:
+      "Né le 6 février 1963 à Mulhouse, Rachid Laïeb recueille les témoignages des aînés, les extraits documentaires sur El Milia et les certificats génétiques iGENEA / FamilyTreeDNA (ADNmt H et ADN-Y G-M201) afin de préserver cette histoire familiale pour les générations futures.",
+    familiesInvolved: ['Laïeb', 'Grid (Krid)'],
+    archivalRef: 'ARCHIVES · MULHOUSE – PARIS',
+  },
+];
+
+export const EL_MILIA_PHOTOS: ElMiliaPhoto[] = [
+  {
+    id: 'vue-sur-el-milia',
+    title: 'Vue sur la vallée d’El Milia',
+    caption: 'Panorama sur la ville d’El Milia et les montagnes environnantes depuis les hauteurs boisées.',
+    src: '/images/el-milia/vue-sur-el-milia.jpg',
+    photographer: 'Djahid Lebsir',
+    license: 'CC BY-SA 3.0',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Vue_sur_El_Milia.JPG',
+    category: 'paysage',
+  },
+  {
+    id: 'place-des-martyrs',
+    title: 'Place des Martyrs — Centre d’El Milia',
+    caption: 'Vue sur la Place des Martyrs et l’architecture historique au cœur de la ville d’El Milia.',
+    src: '/images/el-milia/place-des-martyrs-el-milia.jpg',
+    photographer: 'Djahid Lebsir',
+    license: 'CC BY-SA 3.0',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Place_des_Martyrs_%C3%A0_El_Milia_(Algerie).jpg',
+    category: 'ville',
+  },
+  {
+    id: 'el-milia-panorama',
+    title: 'Quartiers à flanc de colline',
+    caption: 'Habitations et oliviers adossés aux reliefs d’El Milia, dans la wilaya de Jijel.',
+    src: '/images/el-milia/el-milia-panorama.jpg',
+    photographer: 'Taayyebb',
+    license: 'CC BY-SA 4.0',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:El_Milia_.jpg',
+    category: 'ville',
+  },
+  {
+    id: 'belle-nature-el-milia',
+    title: 'Nature et reliefs de Kabylie orientale',
+    caption: 'Massifs forestiers et plaine entourant la commune d’El Milia.',
+    src: '/images/el-milia/belle-nature-el-milia.jpg',
+    photographer: 'Djahid Lebsir',
+    license: 'CC BY-SA 3.0',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:Belle_nature_%C3%A0_El_Milia.jpg',
+    category: 'paysage',
+  },
+  {
+    id: 'el-milia-neige',
+    title: 'El Milia sous la neige',
+    caption: 'Un hiver rigoureux sur les avenues et bâtisses du centre d’El Milia.',
+    src: '/images/el-milia/el-milia-sous-la-neige.jpg',
+    photographer: 'Djahid Lebsir',
+    license: 'Domaine public',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:El_Milia_sous_la_neige.JPG',
+    category: 'ville',
+  },
+  {
+    id: 'sommet-el-milia',
+    title: 'Hauts sommets d’El Milia',
+    caption: 'Pâturages d’altitude et crêtes rocheuses surplombant le territoire d’El Milia.',
+    src: '/images/el-milia/sommet-el-milia.jpg',
+    photographer: 'Nadjib mans',
+    license: 'CC BY-SA 4.0',
+    sourceUrl: 'https://commons.wikimedia.org/wiki/File:2020-0611_12.33.41_The_highest_peak_in_elmllia.jpg',
+    category: 'paysage',
+  },
+];
 
 export const SOCIAL_LINKS = [
   { label: 'Facebook', href: 'https://Facebook.com/?lang=fr' },

@@ -4,32 +4,46 @@ import {
   FAMILY_CLANS,
   FamilyClan,
   LANDSCAPE_IMAGE_PATH,
+  normalizeText,
 } from '../data/familyArchive';
+import { ElMiliaGallery } from './ElMiliaGallery';
+import { ElMiliaTimeline } from './ElMiliaTimeline';
 import { ResilientImage } from './ResilientImage';
 
 interface ChronicleSectionProps {
   searchQuery: string;
   onJumpToBrothers: () => void;
+  selectedClanId: string;
+  onSelectClanId: (clanId: string) => void;
+  selectedTimelineEventId: string | null;
+  onSelectTimelineEventId: (eventId: string) => void;
 }
 
-export function ChronicleSection({ searchQuery, onJumpToBrothers }: ChronicleSectionProps) {
+export function ChronicleSection({
+  searchQuery,
+  onJumpToBrothers,
+  selectedClanId,
+  onSelectClanId,
+  selectedTimelineEventId,
+  onSelectTimelineEventId,
+}: ChronicleSectionProps) {
   const [zoneFilter, setZoneFilter] = useState<'all' | 'Ouled-Ali-Oubraham' | "L'Ajankia">('all');
-  const [selectedClan, setSelectedClan] = useState<FamilyClan>(
-    FAMILY_CLANS.find((c) => c.id === 'laib') || FAMILY_CLANS[0]
-  );
 
-  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const selectedClan: FamilyClan =
+    FAMILY_CLANS.find((c) => c.id === selectedClanId) || FAMILY_CLANS[0];
+
+  const normalizedQuery = normalizeText(searchQuery);
 
   const filteredClans = FAMILY_CLANS.filter((clan) => {
     const matchesZone = zoneFilter === 'all' || clan.zone === zoneFilter;
     if (!matchesZone) return false;
     if (!normalizedQuery) return true;
     return (
-      clan.name.toLowerCase().includes(normalizedQuery) ||
-      clan.zone.toLowerCase().includes(normalizedQuery) ||
-      clan.locationDetail.toLowerCase().includes(normalizedQuery) ||
-      clan.lineageNotes.toLowerCase().includes(normalizedQuery) ||
-      (clan.subBranches?.some((b) => b.toLowerCase().includes(normalizedQuery)) ?? false)
+      normalizeText(clan.name).includes(normalizedQuery) ||
+      normalizeText(clan.zone).includes(normalizedQuery) ||
+      normalizeText(clan.locationDetail).includes(normalizedQuery) ||
+      normalizeText(clan.lineageNotes).includes(normalizedQuery) ||
+      (clan.subBranches?.some((b) => normalizeText(b).includes(normalizedQuery)) ?? false)
     );
   });
 
@@ -178,14 +192,14 @@ export function ChronicleSection({ searchQuery, onJumpToBrothers }: ChronicleSec
               <div className="overflow-hidden rounded-sm border border-[#C9AA78]">
                 <ResilientImage
                   src={LANDSCAPE_IMAGE_PATH}
-                  alt="Montagnes brumeuses et terrasses de pierre autour d'El Milia en Algérie"
-                  fallbackTitle="Paysage d'El Milia"
+                  alt="Vue panoramique réelle sur El Milia et les montagnes de la wilaya de Jijel"
+                  fallbackTitle="Vue sur El Milia"
                   className="w-full aspect-[4/3] object-cover"
                 />
               </div>
               <figcaption className="mt-3 text-xs text-[#4A3E31] font-editorial italic text-sm">
-                Fig. 2 — Reliefs montagneux et terrasses traditionnelles de la région d&apos;El
-                Milia (ex-Constantinois).
+                Fig. 2 — Vue réelle sur El Milia (wilaya de Jijel) — Photographie de Djahid Lebsir
+                (Wikimedia Commons, CC BY-SA 3.0).
               </figcaption>
             </figure>
 
@@ -214,6 +228,31 @@ export function ChronicleSection({ searchQuery, onJumpToBrothers }: ChronicleSec
             </div>
           </aside>
         </div>
+
+        {/* Interactive Historical Timeline of El Milia */}
+        <ElMiliaTimeline
+          searchQuery={searchQuery}
+          selectedEventId={selectedTimelineEventId}
+          onSelectEventId={onSelectTimelineEventId}
+          onSelectFamilyName={(familyName) => {
+            const clean = normalizeText(familyName);
+            const matched = FAMILY_CLANS.find(
+              (c) =>
+                normalizeText(c.name).includes(clean) ||
+                clean.includes(c.id) ||
+                (clean.includes('lai') && c.id === 'laib') ||
+                (clean.includes('grid') && c.id === 'krid')
+            );
+            if (matched) {
+              setZoneFilter('all');
+              onSelectClanId(matched.id);
+            }
+            document.getElementById('familles')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }}
+        />
+
+        {/* Real Photographs Gallery of El Milia */}
+        <ElMiliaGallery />
 
         {/* Interactive Family Directory of Ouled-Ali-Oubraham & L'Ajankia */}
         <div id="familles" className="mt-14 pt-12 border-t border-[#C9AA78]/70">
@@ -270,7 +309,7 @@ export function ChronicleSection({ searchQuery, onJumpToBrothers }: ChronicleSec
                     <button
                       key={clan.id}
                       type="button"
-                      onClick={() => setSelectedClan(clan)}
+                      onClick={() => onSelectClanId(clan.id)}
                       className={`text-left p-4 rounded-md border transition-colors cursor-pointer ${
                         isSelected
                           ? 'bg-[#1C1611] text-[#FAF0D7] border-[#1C1611]'

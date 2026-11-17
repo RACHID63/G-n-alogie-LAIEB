@@ -1,9 +1,16 @@
-import { useState } from 'react';
 import { BookOpen } from 'lucide-react';
 import { THREE_BROTHERS } from '../data/familyArchive';
 
-export function ThreeBrothersSection() {
-  const [selectedBrotherIndex, setSelectedBrotherIndex] = useState<number>(0);
+interface ThreeBrothersSectionProps {
+  selectedBrotherIndex: number;
+  onSelectBrotherIndex: (index: number) => void;
+}
+
+export function ThreeBrothersSection({
+  selectedBrotherIndex,
+  onSelectBrotherIndex,
+}: ThreeBrothersSectionProps) {
+  const setSelectedBrotherIndex = onSelectBrotherIndex;
 
   return (
     <section id="trois-freres" className="py-14 lg:py-20 border-b border-[#C9AA78]/70 bg-papyrus-band">
