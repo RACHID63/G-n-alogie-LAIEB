@@ -69,8 +69,8 @@ export function ContactModal({ isOpen, onClose }: ContactModalProps) {
               <div>
                 <dt className="text-xs text-[#4A3E31]">Courriel</dt>
                 <dd className="font-medium text-[#1C1611]">
-                  <a href="mailto:laieb@soldeal.fr" className="hover:underline">
-                    laieb@soldeal.fr
+                  <a href="mailto:soldealcontact@gmail.com" className="hover:underline">
+                    soldealcontact@gmail.com
                   </a>
                 </dd>
               </div>
@@ -363,7 +363,7 @@ export function AuthModal({
                     type="text"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="laieb@soldeal.fr"
+                    placeholder="soldealcontact@gmail.com"
                     className="w-full min-h-[42px] px-3 py-2 text-sm bg-[#FCF6E8] border border-[#C9AA78] rounded-md text-[#1C1611] focus:outline-none focus:border-[#9A3412]"
                   />
                 </div>

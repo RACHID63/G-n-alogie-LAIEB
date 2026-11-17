@@ -89,7 +89,7 @@ export function Footer({ onOpenContactModal, onOpenAuthModal }: FooterProps) {
 
         <div className="pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
           <p>Archives familiales Laïeb &amp; Grid · El Milia – Mulhouse – Paris</p>
-          <p className="font-mono tabular-nums">laieb@soldeal.fr</p>
+          <p className="font-mono tabular-nums">soldealcontact@gmail.com</p>
         </div>
       </div>
     </footer>

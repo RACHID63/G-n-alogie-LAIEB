@@ -198,7 +198,7 @@ export const FAMILY_MEMBERS: FamilyMember[] = [
     birthPlace: 'El Milia, Algérie',
     address: '12 rue de la Page',
     city: '75000 Paris',
-    email: 'laieb@soldeal.fr',
+    email: 'soldealcontact@gmail.com',
     image: '/images/mostefa-laieb.jpg',
     lineageSummary:
       "Porteur de la lignée paternelle Laïeb originaire d'El Milia (ex-département de Constantine) et rattachée à l'haplogroupe Y-ADN G-M201.",
@@ -213,7 +213,7 @@ export const FAMILY_MEMBERS: FamilyMember[] = [
     birthPlace: 'El Milia, Algérie',
     address: '12 rue de la Page',
     city: '75000 Paris',
-    email: 'laieb@soldeal.fr',
+    email: 'soldealcontact@gmail.com',
     image: '/images/fatma-grid.jpg',
     lineageSummary:
       "Issue de l'ancienne famille Grid (Krid) de l'Ajankia à El Milia, transmettant l'ADN mitochondrial de l'haplogroupe H.",
@@ -228,7 +228,7 @@ export const FAMILY_MEMBERS: FamilyMember[] = [
     birthPlace: 'Mulhouse, France',
     address: '12 rue de la Page',
     city: '75000 Paris',
-    email: 'laieb@soldeal.fr',
+    email: 'soldealcontact@gmail.com',
     image: '/images/profil-rachid.png',
     lineageSummary:
       'Auteur de la compilation historique et des analyses génétiques iGENEA réunissant la lignée paternelle Laïeb et la lignée maternelle Grid.',
