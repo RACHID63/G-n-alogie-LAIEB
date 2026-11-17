@@ -1,0 +1,6 @@
+{
+  "name": "Histoire & Généalogie — Famille Laïeb",
+  "description": "Archives familiales, chronique historique d'Ouled-Ali-Oubraham et El Milia, et résultats de généalogie ADN de la famille Laïeb et Grid.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

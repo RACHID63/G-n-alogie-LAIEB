@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-paper: #F4E4C1;
+  --color-limestone: #EAD09E;
+  --color-ink: #1C1611;
+  --color-ink-muted: #4A3E31;
+  --color-hairline: #C7A672;
+  --color-terracotta: #9A3412;
+  --color-lapis: #1E3A8A;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    background-color: #EBD1A0;
+    color: #1C1611;
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: var(--font-serif);
+  }
+}
+
+/* Warm aged papyrus multi-layered gradient with subtle woven reed grain */
+.bg-papyrus {
+  background-color: #EBD1A0;
+  background-image:
+    radial-gradient(ellipse at 18% 12%, rgba(252, 244, 222, 0.72) 0%, transparent 52%),
+    radial-gradient(ellipse at 85% 32%, rgba(214, 169, 98, 0.34) 0%, transparent 55%),
+    radial-gradient(ellipse at 25% 78%, rgba(247, 232, 198, 0.55) 0%, transparent 50%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(139, 98, 43, 0.025) 0px,
+      rgba(139, 98, 43, 0.025) 1px,
+      transparent 1px,
+      transparent 14px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(139, 98, 43, 0.02) 0px,
+      rgba(139, 98, 43, 0.02) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    linear-gradient(155deg, #F6E9CB 0%, #ECD3A1 35%, #E3BE7E 70%, #D9AC65 100%);
+  background-attachment: fixed;
+}
+
+.bg-papyrus-band {
+  background-image:
+    radial-gradient(ellipse at 75% 20%, rgba(252, 244, 222, 0.45) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(214, 173, 106, 0.28) 0%, rgba(196, 150, 82, 0.22) 100%);
+}
+
+.bg-papyrus-card {
+  background: linear-gradient(145deg, rgba(252, 245, 228, 0.88) 0%, rgba(244, 227, 190, 0.82) 100%);
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+.editorial-dropcap::first-letter {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 600;
+  line-height: 0.85;
+  float: left;
+  margin-right: 0.75rem;
+  margin-top: 0.2rem;
+  color: #9A3412;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
